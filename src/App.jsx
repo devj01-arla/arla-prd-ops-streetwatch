@@ -5,8 +5,6 @@ import Dashboard from './pages/Dashboard';
 import History from './pages/History';
 import Login from './pages/Login';
 
-const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '');
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return Boolean(localStorage.getItem('streetwatch-token'));
@@ -29,7 +27,7 @@ function App() {
   }
 
   return (
-    <Router basename={routerBasename}>
+    <Router>
       <div className="app-layout">
         <Sidebar onLogout={handleLogout} />
         <main className="main-content-wrapper">
