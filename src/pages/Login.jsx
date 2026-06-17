@@ -5,12 +5,10 @@ import { Eye, EyeOff, LockKeyhole, ShieldCheck, UserRound } from 'lucide-react';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 const Login = ({ onLogin }) => {
-  const [mode, setMode] = useState('login');
-  const [form, setForm] = useState({ user: '', password: '', confirmPassword: '' });
+  const [form, setForm] = useState({ user: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const isRegister = mode === 'register';
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,27 +16,14 @@ const Login = ({ onLogin }) => {
     setError('');
   };
 
-  const switchMode = () => {
-    setMode((current) => (current === 'login' ? 'register' : 'login'));
-    setForm({ user: '', password: '', confirmPassword: '' });
-    setError('');
-    setShowPassword(false);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (isRegister && form.password !== form.confirmPassword) {
-      setError('Las contrasenas no coinciden.');
-      return;
-    }
 
     setIsSubmitting(true);
     setError('');
 
     try {
-      const endpoint = isRegister ? 'register' : 'login';
-      const response = await axios.post(`${API_URL}/auth/${endpoint}`, {
+      const response = await axios.post(`${API_URL}/auth/login`, {
         username: form.user,
         password: form.password
       });
@@ -60,35 +45,13 @@ const Login = ({ onLogin }) => {
             <ShieldCheck size={30} className="login-brand-icon" />
             <div>
               <span>Arla & Asociados</span>
-              <strong>AI</strong>
             </div>
           </div>
 
           <div className="login-copy">
-            <p className="login-kicker">{isRegister ? 'Nuevo usuario' : 'Acceso seguro'}</p>
-            <h1>{isRegister ? 'Crea tu acceso operativo' : 'Centro de monitoreo inteligente'}</h1>
-            <p>
-              {isRegister
-                ? 'Registra una cuenta para acceder al panel de monitoreo y reportes autorizados.'
-                : 'Ingresa para visualizar metricas, camaras y reportes operativos del sistema StreetWatch.'}
-            </p>
-          </div>
-
-          <div className="auth-switch" role="tablist" aria-label="Modo de autenticacion">
-            <button
-              type="button"
-              className={mode === 'login' ? 'active' : ''}
-              onClick={() => setMode('login')}
-            >
-              Ingresar
-            </button>
-            <button
-              type="button"
-              className={mode === 'register' ? 'active' : ''}
-              onClick={() => setMode('register')}
-            >
-              Registrarse
-            </button>
+            <p className="login-kicker">Acceso seguro</p>
+            <h1>Centro de monitoreo inteligente</h1>
+            <p>Ingresa para visualizar metricas de transito.</p>
           </div>
 
           <form className="login-form" onSubmit={handleSubmit}>
@@ -101,7 +64,7 @@ const Login = ({ onLogin }) => {
                   value={form.user}
                   onChange={handleChange}
                   autoComplete="username"
-                  placeholder={isRegister ? 'nuevo.usuario' : 'admin'}
+                  placeholder="admin"
                   required
                 />
               </div>
@@ -116,8 +79,8 @@ const Login = ({ onLogin }) => {
                   value={form.password}
                   onChange={handleChange}
                   type={showPassword ? 'text' : 'password'}
-                  autoComplete={isRegister ? 'new-password' : 'current-password'}
-                  placeholder={isRegister ? 'Minimo 6 caracteres' : 'admin123'}
+                  autoComplete="current-password"
+                  placeholder="admin123"
                   required
                 />
                 <button
@@ -131,36 +94,12 @@ const Login = ({ onLogin }) => {
               </div>
             </label>
 
-            {isRegister && (
-              <label className="login-field">
-                <span>Confirmar contrasena</span>
-                <div className="login-input-wrap">
-                  <LockKeyhole size={18} />
-                  <input
-                    name="confirmPassword"
-                    value={form.confirmPassword}
-                    onChange={handleChange}
-                    type={showPassword ? 'text' : 'password'}
-                    autoComplete="new-password"
-                    placeholder="Repite tu contrasena"
-                    required
-                  />
-                </div>
-              </label>
-            )}
-
             {error && <p className="login-error">{error}</p>}
 
             <button className="login-submit" type="submit">
-              {isSubmitting
-                ? (isRegister ? 'Creando usuario...' : 'Validando acceso...')
-                : (isRegister ? 'Crear cuenta' : 'Ingresar al sistema')}
+              {isSubmitting ? 'Validando acceso...' : 'Ingresar al sistema'}
             </button>
           </form>
-
-          <button type="button" className="login-secondary-action" onClick={switchMode}>
-            {isRegister ? 'Ya tengo una cuenta' : 'Crear una cuenta nueva'}
-          </button>
 
           <div className="login-meta">
             <span>Sesion protegida</span>

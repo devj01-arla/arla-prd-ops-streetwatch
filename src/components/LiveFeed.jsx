@@ -29,7 +29,7 @@ const LiveFeed = ({ lastDetection, connected }) => {
   return (
     <div className="card live-feed-container" onMouseMove={handleMouseMove}>
       <div className="live-feed-header">
-        <h3>STREETWATCH_CAM_01</h3>
+        <h3>Arla_CAM_01</h3>
         <div className={`status-indicator ${connected ? 'status-online' : 'status-offline'}`}>
           {connected ? 'REC EN VIVO' : 'DESCONECTADO'}
         </div>

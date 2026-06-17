@@ -80,7 +80,7 @@ const History = () => {
         
         const link = document.createElement("a");
         link.setAttribute("href", url);
-        link.setAttribute("download", `StreetWatch_Historial_${selectedDate}.csv`);
+        link.setAttribute("download", `Arla_Historial_${selectedDate}.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

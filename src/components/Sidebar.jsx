@@ -25,19 +25,7 @@ const Sidebar = ({ onLogout }) => {
     <aside className="sidebar">
       <div className="sidebar-brand">
         <Shield size={28} className="brand-icon" />
-        <span className="brand-text">
-          Arla & Asociados{' '}
-          <span
-            className="brand-gradient"
-            style={{
-              background: 'linear-gradient(90deg, var(--primary), #a855f7)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}
-          >
-            AI
-          </span>
-        </span>
+        <span className="brand-text">Arla & Asociados</span>
       </div>
 
       <nav className="sidebar-menu">
